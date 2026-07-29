@@ -1,0 +1,45 @@
+name: Plaza check
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: plaza-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run the bot
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python plaza_alert.py
+
+      - name: Save what it has seen
+        run: |
+          if [ -n "$(git status --porcelain seen_listings.json)" ]; then
+            git config user.name "plaza-bot"
+            git config user.email "plaza-bot@users.noreply.github.com"
+            git add seen_listings.json
+            git commit -m "update seen listings"
+            git push
+          else
+            echo "no changes to save"
+          fi
