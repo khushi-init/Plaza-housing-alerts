@@ -101,12 +101,13 @@ def describe(item):
     toeslag = "huurtoeslag possible" if item.get("huurLigtOpOfOnderHuurtoeslaggrens") else "no huurtoeslag"
 
     url_key = item.get("urlKey")
-    link = f"{SITE_BASE}/aanbod/detail/{url_key}" if url_key else f"{SITE_BASE}/aanbod/wonen"
-
-    return (f"{address}, {city}\n"
+    postcode = (item.get("postalcode") or "").strip()
+    loc = f"{address}, {postcode} {city}".strip().strip(",")
+    link = (f"{SITE_BASE}/en/availables-places/living-place/details/{url_key}"
+            if url_key else f"{SITE_BASE}/aanbod/wonen")
+    return (f"{loc}\n"
             f"   {rent_str} | {dwelling} | {zelfstandig} | {toeslag}\n"
             f"   {link}")
-
 
 def region_of(item):
     return (item.get("regio") or {}).get("name", "")
