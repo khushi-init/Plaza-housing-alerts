@@ -6,6 +6,15 @@ It polls the Plaza listings API, compares against listings it has already seen, 
 emails you the moment a new one shows up. It only reads public listing data — it
 never logs in or interacts with the site.
 
+## Why
+
+The housing market in the Netherlands is brutal, especially as a student — good
+listings get flooded with reactions within minutes of going up, and no one has time
+to sit there refreshing a listings page all day between classes and everything else.
+I built this after running into that problem myself: instead of manually checking the
+site, the bot checks every 5 minutes and emails me the second something new appears,
+so I can react immediately instead of finding out hours too late.
+
 ## How it runs
 
 This bot runs automatically via **GitHub Actions** (see
