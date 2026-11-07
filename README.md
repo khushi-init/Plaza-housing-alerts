@@ -1,4 +1,4 @@
-# Plaza Alert
+# Plaza Housing Bot
 
 Email notifier for new housing listings on [Plaza](https://plaza.newnewnew.space) (newnewnew.space).
 
